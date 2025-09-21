@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import { loginFormSchema, LoginFormSchema } from "../schema/auth.schema";
 
 export const LoginForm = () => {
-  const [isSuccess, setIsSuccess] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const form = useForm<LoginFormSchema>({
@@ -38,13 +37,11 @@ export const LoginForm = () => {
         },
         onSuccess: () => {
           toast.success("Login successful");
-          setIsSuccess(true);
           setIsLoading(false);
           form.reset();
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);
-          setIsSuccess(false);
           setIsLoading(false);
         },
       },
@@ -61,13 +58,11 @@ export const LoginForm = () => {
         },
         onSuccess: () => {
           toast.success("Login successful");
-          setIsSuccess(true);
           setIsLoading(false);
           form.reset();
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);
-          setIsSuccess(false);
           setIsLoading(false);
         },
       },
@@ -115,7 +110,7 @@ export const LoginForm = () => {
         <AnimatedButton
           type="submit"
           isLoading={form.formState.isSubmitting || isLoading}
-          isSuccess={isSuccess}
+          isSuccess={form.formState.isSubmitSuccessful}
           loadingText="Logging in..."
           successText="Login successful!"
           successIcon={CheckCircle}

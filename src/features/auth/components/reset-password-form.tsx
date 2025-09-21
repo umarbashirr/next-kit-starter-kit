@@ -13,8 +13,14 @@ import {
   resetPasswordFormSchema,
   ResetPasswordFormSchema,
 } from "../schema/auth.schema";
+import { useRouter, useSearchParams } from "next/navigation";
+import { authClient } from "@/lib/authentication/auth-client";
+import { toast } from "sonner";
 
 export const ResetPasswordForm = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const form = useForm<ResetPasswordFormSchema>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
@@ -23,8 +29,27 @@ export const ResetPasswordForm = () => {
     },
   });
 
-  const onSubmit = async (data: ResetPasswordFormSchema) => {
-    console.log(data);
+  const token = searchParams.get("token");
+
+  const onSubmit = async (values: ResetPasswordFormSchema) => {
+    try {
+      const { error } = await authClient.resetPassword({
+        newPassword: values.password,
+        token: token as string,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      form.reset();
+      toast.success("Password updated successfully!");
+      router.push("/auth/login");
+    } catch (error: unknown) {
+      console.error(error);
+      const err =
+        error instanceof Error ? error.message : "Failed to update password";
+      toast.error(err);
+    }
   };
 
   return (

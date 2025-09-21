@@ -29,15 +29,16 @@ export async function sendPasswordResetEmail({
     });
 
     if (error) {
-      console.error("Error sending password reset email:", error);
-      throw new Error("Failed to send password reset email");
+      return { error: error.message, success: false };
     }
 
     console.log("Password reset email sent successfully:", data);
-    return data;
+    return { data, success: true };
   } catch (error) {
     console.error("Error sending password reset email:", error);
-    throw error;
+    const err =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return { error: err, success: false };
   }
 }
 

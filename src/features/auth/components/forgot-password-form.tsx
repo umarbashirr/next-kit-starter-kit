@@ -28,10 +28,21 @@ export const ForgotPasswordForm = () => {
 
   const onSubmit = async (values: ForgotPasswordFormSchema) => {
     try {
+      const res = await fetch(`/api/user?email=${values.email}`);
+      const resData = await res.json();
+
+      console.log(resData);
+
+      if (!res.ok) {
+        throw new Error(resData.error);
+      }
+
       const { error } = await authClient.requestPasswordReset({
         email: values.email,
         redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`,
       });
+
+      console.log(error);
 
       if (error) {
         throw new Error(error.message);
@@ -63,7 +74,7 @@ export const ForgotPasswordForm = () => {
         <AnimatedButton
           type="submit"
           isLoading={form.formState.isSubmitting}
-          isSuccess={form.formState.isSubmitted}
+          isSuccess={false}
           loadingText="Sending reset password link..."
           successText="Reset password link sent!"
           successIcon={CheckCircle}
