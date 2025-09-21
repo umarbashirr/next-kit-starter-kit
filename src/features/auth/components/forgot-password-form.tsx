@@ -7,14 +7,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, CheckCircle, Loader2, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { authClient } from "@/lib/authentication/auth-client";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   forgotPasswordFormSchema,
   ForgotPasswordFormSchema,
 } from "../schema/auth.schema";
 
 export const ForgotPasswordForm = () => {
+  const router = useRouter();
   const form = useForm<ForgotPasswordFormSchema>({
     resolver: zodResolver(forgotPasswordFormSchema),
     defaultValues: {
@@ -22,8 +26,25 @@ export const ForgotPasswordForm = () => {
     },
   });
 
-  const onSubmit = async (data: ForgotPasswordFormSchema) => {
-    console.log(data);
+  const onSubmit = async (values: ForgotPasswordFormSchema) => {
+    try {
+      const { error } = await authClient.requestPasswordReset({
+        email: values.email,
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success("Reset password link sent!");
+      router.push("/auth/login");
+      form.reset();
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      toast.error(errorMessage);
+    }
   };
 
   return (
