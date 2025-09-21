@@ -8,11 +8,12 @@ import { signIn } from "@/lib/authentication/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle, Loader2, Lock, Mail } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { loginFormSchema, LoginFormSchema } from "../schema/login-form.schema";
+import { loginFormSchema, LoginFormSchema } from "../schema/auth.schema";
 
 export const LoginForm = () => {
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -96,6 +97,20 @@ export const LoginForm = () => {
           showPasswordToggle={true}
           animationDelay={0.6}
         />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="text-center mt-6 flex items-center justify-end"
+        >
+          <Link
+            href="/auth/forgot-password"
+            className="text-sm text-primary hover:text-primary/80 transition-colors duration-200 font-medium cursor-pointer"
+          >
+            Forgot password?
+          </Link>
+        </motion.div>
 
         <AnimatedButton
           type="submit"

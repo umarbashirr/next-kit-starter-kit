@@ -12,10 +12,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  registerFormSchema,
-  RegisterFormSchema,
-} from "../schema/register-form.schema";
+import { registerFormSchema, RegisterFormSchema } from "../schema/auth.schema";
 
 export const RegisterForm = () => {
   const [isSuccess, setIsSuccess] = React.useState(false);
