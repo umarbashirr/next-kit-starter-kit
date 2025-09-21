@@ -5,7 +5,10 @@ import { admin, organization } from "better-auth/plugins";
 
 import db from "../db";
 import { COMPANY_INFO } from "../utils/company-data";
-import { sendPasswordResetEmail } from "@/features/auth/actions/auth.actions";
+import {
+  sendPasswordResetEmail,
+  sendWelcomeEmail,
+} from "@/features/auth/actions/auth.actions";
 import { sendVerifyEmail } from "@/features/auth/actions/auth.actions";
 
 export const auth = betterAuth({
@@ -35,6 +38,19 @@ export const auth = betterAuth({
       }
     },
   },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          await sendWelcomeEmail({
+            userName: user.name,
+            userEmail: user.email,
+          });
+        },
+      },
+    },
+  },
+
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
       await sendVerifyEmail({
