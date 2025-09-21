@@ -1,0 +1,58 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript patterns and best practices for the project
+---
+
+# TypeScript Guidelines
+
+## Generic Components
+
+Use TypeScript generics for reusable components:
+
+```typescript
+interface AnimatedFormInputProps<T extends FieldValues> {
+  control: Control<T>;
+  name: FieldPath<T>;
+  // ... other props
+}
+
+export function AnimatedFormInput<T extends FieldValues>(
+  {
+    // ... props
+  }: AnimatedFormInputProps<T>
+) {
+  // ... implementation
+}
+```
+
+## Type Safety
+
+- Always use proper typing, avoid `any`
+- Use React Hook Form types: `Control<T>`, `FieldPath<T>`, `FieldValues`
+- Use Zod schemas for runtime validation and TypeScript types
+- Export both schema and TypeScript types from schema files
+
+## Error Handling
+
+- Use type guards for error handling
+- Handle potential undefined values safely
+- Use proper error types from Better Auth and other libraries
+
+```typescript
+const errorMessage = error instanceof Error ? error.message : "Unknown error";
+```
+
+## Import Organization
+
+1. React and Next.js imports
+2. Third-party libraries
+3. Internal components (UI components first)
+4. Utils and types
+5. Relative imports
+
+## Component Props
+
+- Use proper interfaces for component props
+- Include JSDoc comments for complex props
+- Use optional props with default values
+- Extend from appropriate base types (ButtonHTMLAttributes, etc.)

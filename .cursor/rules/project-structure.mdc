@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+description: Project structure and architecture guidelines
+---
+
+# Next.js Kit Project Structure
+
+## Architecture Overview
+
+This is a modern Next.js 14 starter kit with TypeScript, Prisma, Better Auth, and animated UI components.
+
+## Key Directories
+
+- `src/app/` - Next.js App Router pages and layouts
+- `src/components/` - Reusable UI components
+  - `src/components/form/` - Animated form components ([AnimatedFormInput](mdc:src/components/form/animated-form-input.tsx), [AnimatedButton](mdc:src/components/form/animated-button.tsx))
+  - `src/components/ui/` - Base shadcn/ui components
+- `src/features/` - Feature-based organization
+  - `src/features/auth/` - Authentication components and schemas
+- `src/lib/` - Utilities and configurations
+  - `src/lib/authentication/` - Better Auth setup ([auth.ts](mdc:src/lib/authentication/auth.ts))
+- `prisma/` - Database schema and migrations
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Animations**: Framer Motion
+- **Database**: Prisma + PostgreSQL
+- **Authentication**: Better Auth
+- **Forms**: React Hook Form + Zod validation
+- **Email**: Resend
+
+## File Naming Conventions
+
+- kebab-case for files: `user-profile.tsx`
+- PascalCase for components: `UserProfile`
+- camelCase for functions: `getUserData`

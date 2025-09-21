@@ -1,0 +1,55 @@
+---
+globs: src/components/**/*.tsx,src/features/**/*.tsx
+description: Performance optimization and accessibility guidelines
+---
+
+# Performance and Accessibility Guidelines
+
+## Performance Optimization
+
+- Use `React.memo` for expensive components
+- Use `useCallback` and `useMemo` appropriately
+- Only animate `transform` and `opacity` properties
+- Avoid unnecessary re-renders
+- Use dynamic imports for code splitting
+
+## Animation Performance
+
+- Use Framer Motion's `motion.div` for containers
+- Use `AnimatePresence` for mount/unmount animations
+- Respect `prefers-reduced-motion` user preference
+- Keep animations smooth at 60fps
+- Use `will-change` CSS property for animated elements
+
+## Accessibility Requirements
+
+- Use proper ARIA labels and descriptions
+- Implement keyboard navigation support
+- Ensure screen reader compatibility
+- Use semantic HTML elements
+- Maintain proper focus management
+- Ensure color contrast compliance
+
+## Form Accessibility
+
+- Use proper form labels and descriptions
+- Associate error messages with form fields
+- Use `aria-invalid` for validation states
+- Implement proper focus management
+- Support keyboard navigation
+
+## Loading States
+
+- Show appropriate loading indicators
+- Use skeleton screens for better UX
+- Provide clear feedback during async operations
+- Handle loading errors gracefully
+- Use consistent loading patterns across components
+
+## Error States
+
+- Provide clear, actionable error messages
+- Use proper error boundaries
+- Handle network errors gracefully
+- Don't expose sensitive information in errors
+- Provide recovery options when possible

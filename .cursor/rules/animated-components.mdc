@@ -1,0 +1,56 @@
+---
+globs: src/components/form/*.tsx,src/features/auth/components/*.tsx
+description: Guidelines for animated form components using Framer Motion
+---
+
+# Animated Components Guidelines
+
+## Reusable Components
+
+Always use the established animated components:
+
+- [AnimatedFormInput](mdc:src/components/form/animated-form-input.tsx) for all form inputs
+- [AnimatedButton](mdc:src/components/form/animated-button.tsx) for all buttons
+
+## Animation Standards
+
+- **Entry animations**: `initial={{ opacity: 0, y: 20 }}` → `animate={{ opacity: 1, y: 0 }}`
+- **Duration**: 0.5s for entry, 0.2s for micro-interactions
+- **Easing**: "easeOut" for entry, "easeInOut" for state changes
+- **Staggered delays**: Use 0.1s increments (0.1, 0.2, 0.3, 0.4, 0.5)
+
+## Component Usage Patterns
+
+### Form Input
+
+```typescript
+<AnimatedFormInput
+  control={form.control}
+  name="email"
+  label="Email"
+  type="email"
+  icon={Mail}
+  animationDelay={0.1}
+/>
+```
+
+### Button with States
+
+```typescript
+<AnimatedButton
+  type="submit"
+  isLoading={isLoading}
+  isSuccess={isSuccess}
+  loadingText="Processing..."
+  animationDelay={0.2}
+>
+  Submit
+</AnimatedButton>
+```
+
+## Performance Rules
+
+- Only animate `transform` and `opacity` properties
+- Use `React.memo` for expensive components
+- Respect `prefers-reduced-motion` user preference
+- Use `AnimatePresence` for mount/unmount animations

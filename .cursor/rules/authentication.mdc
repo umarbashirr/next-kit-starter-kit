@@ -1,0 +1,51 @@
+---
+globs: src/lib/authentication/*.ts,src/features/auth/**/*.ts,src/app/api/auth/**/*.ts
+description: Better Auth integration and authentication patterns
+---
+
+# Authentication Guidelines
+
+## Better Auth Configuration
+
+Reference the main auth setup in [auth.ts](mdc:src/lib/authentication/auth.ts):
+
+- Prisma adapter with PostgreSQL
+- Email/password and social authentication
+- Multi-tenancy with organization support
+- Proper error handling for email sending
+
+## Authentication Patterns
+
+- Use server components for auth pages when possible
+- Handle loading states and errors gracefully
+- Implement proper redirects after auth actions
+- Use toast notifications for user feedback
+
+## Error Handling
+
+- Prevent email enumeration attacks
+- Show generic success messages for password reset
+- Handle specific error cases with appropriate messages
+- Log errors for debugging but don't expose sensitive data
+
+## Email Integration
+
+- Use Resend for transactional emails
+- Handle email sending errors properly
+- Implement proper error propagation to prevent false success messages
+- Use server actions for email operations
+
+## Security Guidelines
+
+- Validate all inputs with Zod schemas
+- Use proper session management
+- Implement rate limiting
+- Handle CSRF protection
+- Never expose sensitive information in error messages
+
+## Session Management
+
+- Use `getServerSession` for server-side session checks
+- Implement proper middleware for route protection
+- Handle session expiration gracefully
+- Use proper redirects based on auth state

@@ -1,0 +1,57 @@
+---
+globs: src/features/auth/**/*.tsx,src/components/form/*.tsx
+description: Form handling patterns with React Hook Form and Zod validation
+---
+
+# Forms and Validation Guidelines
+
+## Form Setup Pattern
+
+Always use React Hook Form with Zod validation:
+
+```typescript
+const form = useForm<SchemaType>({
+  resolver: zodResolver(schema),
+  defaultValues: {
+    /* ... */
+  },
+});
+```
+
+## Error Handling
+
+- Use try-catch blocks for all async operations
+- Show user-friendly error messages with toast notifications
+- Handle specific error cases appropriately
+
+```typescript
+try {
+  const result = await operation();
+  toast.success("Success message");
+} catch (error) {
+  const message = error instanceof Error ? error.message : "Unknown error";
+  toast.error(message);
+}
+```
+
+## Form Components
+
+- Use [AnimatedFormInput](mdc:src/components/form/animated-form-input.tsx) for all inputs
+- Use [AnimatedButton](mdc:src/components/form/animated-button.tsx) for all buttons
+- Include proper loading states and disabled states
+- Use consistent animation delays for staggered effects
+
+## Validation Schemas
+
+- Define Zod schemas in `src/features/auth/schema/`
+- Use descriptive error messages
+- Validate on both client and server side
+- Export both schema and TypeScript types
+
+## Authentication Forms
+
+Reference existing patterns in:
+
+- [LoginForm](mdc:src/features/auth/components/login-form.tsx)
+- [RegisterForm](mdc:src/features/auth/components/register-form.tsx)
+- [ForgotPasswordForm](mdc:src/features/auth/components/forgot-password-form.tsx)
